@@ -26,7 +26,6 @@ public class Stock {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm'Z'", timezone = "GMT")
     private Instant registrationDate;
     private Long totalQty;
-    private Long remainingQty;
     private Long outputQty;
 
 
@@ -35,11 +34,13 @@ public class Stock {
     @JoinColumn(name = "product_id")
     private Product product;
 
-    public Stock(Long id, Long totalQty, Product product) {
+    public Stock(Long id, Long totalQty, Product product, Long outputQty, Instant registrationDate) {
         this.id = id;
         this.registrationDate = Instant.now();
         this.totalQty = totalQty;
         this.product = product;
+        this.outputQty = outputQty;
+        this.registrationDate = registrationDate;
     }
 
 }

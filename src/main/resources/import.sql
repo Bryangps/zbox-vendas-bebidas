@@ -36,8 +36,8 @@ INSERT INTO tb_ordem_item(order_id, product_id, quantity, price) VALUES (3,3,4, 
 INSERT INTO tb_ordem_item(order_id, product_id, quantity, price) VALUES (4, 4, 3, 7.50);
 INSERT INTO tb_ordem_item(order_id, product_id, quantity, price) VALUES (5,5, 1, 10.0);
 
-INSERT INTO tb_stock(total_qty, product_id) VALUES (50, 1);
-INSERT INTO tb_stock(total_qty, product_id) VALUES (70, 2);
-INSERT INTO tb_stock(total_qty, product_id) VALUES (60, 3);
-INSERT INTO tb_stock(total_qty, product_id) VALUES (30, 4);
-INSERT INTO tb_stock(total_qty, product_id) VALUES (80, 5);
+INSERT INTO tb_stock(total_qty, product_id, output_qty, registration_date) VALUES (50, 1, 0.0, TIMESTAMP WITH TIME ZONE '2025-01-25T14:00:00Z');
+INSERT INTO tb_stock(total_qty, product_id, output_qty, registration_date) VALUES (70, 2, 0.0, TIMESTAMP WITH TIME ZONE '2025-01-22T17:00:00Z');
+INSERT INTO tb_stock(total_qty, product_id, output_qty, registration_date) VALUES (60, 3, 0.0, TIMESTAMP WITH TIME ZONE '2025-01-18T19:00:00Z');
+INSERT INTO tb_stock(total_qty, product_id, output_qty, registration_date) VALUES (30, 4, 0.0, TIMESTAMP WITH TIME ZONE '2025-01-30T09:00:00Z');
+INSERT INTO tb_stock(total_qty, product_id, output_qty, registration_date) VALUES (80, 5, 0.0, TIMESTAMP WITH TIME ZONE '2025-01-10T20:00:00Z');
