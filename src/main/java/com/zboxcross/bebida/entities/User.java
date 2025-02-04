@@ -11,15 +11,14 @@ import java.util.List;
 @Table(name = "tb_user")
 @Getter
 @Setter
-@NoArgsConstructor
 @EqualsAndHashCode
+@NoArgsConstructor
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Exclude
     private Long id;
-
     private String name;
     private String email;
     private String password;
@@ -28,7 +27,7 @@ public class User {
     @Setter(AccessLevel.NONE)
     private List<Order> orders = new ArrayList<>();
 
-    public User(Long id, String name,  String email, String password) {
+    public User(Long id, String name, String email, String password){
         this.id = id;
         this.name = name;
         this.email = email;

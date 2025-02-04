@@ -28,8 +28,8 @@ public class OrderItem {
     private Double price;
 
     public OrderItem(Order order, Product product, Integer quantity, Double price) {
-        this.id.setOrder(order);
-        this.id.setProduct(product);
+        id.setOrder(order);
+        id.setProduct(product);
         this.quantity = quantity;
         this.price = price;
     }

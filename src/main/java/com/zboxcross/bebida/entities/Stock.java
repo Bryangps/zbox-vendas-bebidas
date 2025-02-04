@@ -31,12 +31,10 @@ public class Stock {
 
     @OneToOne
     @MapsId
-    @JoinColumn(name = "product_id")
     private Product product;
 
     public Stock(Long id, Long totalQty, Product product, Long outputQty, Instant registrationDate) {
         this.id = id;
-        this.registrationDate = Instant.now();
         this.totalQty = totalQty;
         this.product = product;
         this.outputQty = outputQty;

@@ -1,10 +1,7 @@
 package com.zboxcross.bebida.entities;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.*;
 
@@ -30,23 +27,22 @@ public class Product {
     private String ml;
 
     @OneToMany(mappedBy = "id.product")
+    @Setter(AccessLevel.NONE)
     private Set<OrderItem> items = new HashSet<>();
 
-    @ManyToMany
-    @JoinTable(name = "tb_product_category",
-    joinColumns = @JoinColumn(name = "product_id"),
-    inverseJoinColumns = @JoinColumn(name = "category_id"))
-    private List<Category> categories = new ArrayList<>();
+    @ManyToOne
+    private Category category;
 
     @OneToOne(mappedBy = "product")
     private Stock stock;
 
-    public Product(Long id, String name, String imgUrl, Double price, String ml, Stock stock) {
+    public Product(Long id, String name, String imgUrl, Double price, String ml, Stock stock, Category category) {
         this.id = id;
         this.name = name;
         this.imgUrl = imgUrl;
         this.price = price;
         this.ml = ml;
         this.stock = stock;
+        this.category = category;
     }
 }

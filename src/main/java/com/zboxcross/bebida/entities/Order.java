@@ -3,7 +3,10 @@ package com.zboxcross.bebida.entities;
 import com.zboxcross.bebida.entities.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.Instant;
 import java.util.HashSet;
@@ -32,7 +35,6 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "client_id")
-    @Setter(AccessLevel.NONE)
     private User client;
 
     @OneToOne(mappedBy = "order")
