@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
@@ -48,6 +49,22 @@ public class ProductService {
         return new ProductDTO(entity);
     }
 
+    @Transactional
+    public ProductDTO update(Long id, ProductDTO dto){
+
+        Product entity = repository.getReferenceById(id);
+        copyDtoToEntity(dto, entity);
+        entity = repository.save(entity);
+        stockRepository.save(entity.getStock());
+        return new ProductDTO(entity);
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public void delete(Long id){
+
+        repository.deleteById(id);
+    }
+
 
     private void copyDtoToEntity(ProductDTO dto, Product entity){
         entity.setName(dto.getName());
@@ -59,11 +76,19 @@ public class ProductService {
         category.setId(dto.getCategory().getId());
         entity.setCategory(category);
 
-        Stock stock = new Stock();
-        stock.setTotalQty(dto.getStock().getTotalQty());
-        stock.setRegistrationDate(Instant.now());
-        stock.setOutputQty(0L);
-        stock.setProduct(entity);
-        entity.setStock(stock);
+        if (entity.getStock() == null) {
+            Stock stock = new Stock();
+            stock.setTotalQty(dto.getStock().getTotalQty());
+            stock.setRegistrationDate(Instant.now());
+            stock.setOutputQty(0L);
+            stock.setProduct(entity);
+            entity.setStock(stock);
+        }
+        else {
+            Stock stock = stockRepository.getReferenceById(entity.getStock().getId());
+            stock.setTotalQty(dto.getStock().getTotalQty());
+            stock.setRegistrationDate(Instant.now());
+            stock.setOutputQty(0L);
+        }
     }
 }
