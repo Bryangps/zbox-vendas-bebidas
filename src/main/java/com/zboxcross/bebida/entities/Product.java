@@ -33,7 +33,7 @@ public class Product {
     @ManyToOne
     private Category category;
 
-    @OneToOne(mappedBy = "product")
+    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
     private Stock stock;
 
     public Product(Long id, String name, String imgUrl, Double price, String ml, Stock stock, Category category) {
