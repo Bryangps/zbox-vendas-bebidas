@@ -7,7 +7,10 @@ import com.zboxcross.bebida.entities.Product;
 import com.zboxcross.bebida.entities.Stock;
 import com.zboxcross.bebida.repositories.ProductRepository;
 import com.zboxcross.bebida.repositories.StockRepository;
+import com.zboxcross.bebida.services.exceptions.DatabaseException;
+import com.zboxcross.bebida.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -61,8 +64,16 @@ public class ProductService {
 
     @Transactional(propagation = Propagation.SUPPORTS)
     public void delete(Long id){
+        if (!repository.existsById(id)){
+            throw new ResourceNotFoundException("Recurso não encontrado");
+        }
 
-        repository.deleteById(id);
+        try{
+            repository.deleteById(id);
+        }
+        catch (DataIntegrityViolationException e){
+            throw new DatabaseException("Falha de integridade referencial");
+        }
     }
 
 
