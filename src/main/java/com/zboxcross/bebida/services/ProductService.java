@@ -9,6 +9,7 @@ import com.zboxcross.bebida.repositories.ProductRepository;
 import com.zboxcross.bebida.repositories.StockRepository;
 import com.zboxcross.bebida.services.exceptions.DatabaseException;
 import com.zboxcross.bebida.services.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -54,12 +55,16 @@ public class ProductService {
 
     @Transactional
     public ProductDTO update(Long id, ProductDTO dto){
-
-        Product entity = repository.getReferenceById(id);
-        copyDtoToEntity(dto, entity);
-        entity = repository.save(entity);
-        stockRepository.save(entity.getStock());
-        return new ProductDTO(entity);
+        try {
+            Product entity = repository.getReferenceById(id);
+            copyDtoToEntity(dto, entity);
+            entity = repository.save(entity);
+            stockRepository.save(entity.getStock());
+            return new ProductDTO(entity);
+        }
+        catch (EntityNotFoundException e){
+            throw new ResourceNotFoundException("Recurso não encotrado");
+        }
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)
